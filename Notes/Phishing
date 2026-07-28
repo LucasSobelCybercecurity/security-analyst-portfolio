@@ -1,0 +1,1485 @@
+#Phishing - Complete Notes
+1. Email Basics
+Email was popularized in the 1970s by Ray Tomlinson, who introduced the @ symbol.
+________________________________________
+2. Email Address Structure
+An email address contains:
+Username
+•	Identifies the recipient's mailbox.
+@ Symbol
+•	Separates username from domain.
+Domain
+•	Identifies the mail server.
+Example:
+david@tryhackme.com
+•	Username → david
+•	Domain → tryhackme.com
+________________________________________
+3. Email Protocols
+SMTP (Simple Mail Transfer Protocol)
+•	Used to send emails.
+POP3 (Post Office Protocol)
+•	Downloads emails to one device.
+•	Emails may be removed from the server.
+IMAP (Internet Message Access Protocol)
+•	Syncs emails across multiple devices.
+•	Emails remain stored on the server.
+________________________________________
+4. Email Journey
+1.	User sends an email.
+2.	SMTP sends it to the sender's mail server.
+3.	DNS finds the recipient's mail server.
+4.	Email travels across the Internet.
+5.	Recipient retrieves email using POP3 or IMAP.
+________________________________________
+5. Email Structure
+An email has two main parts:
+Email Header
+Contains metadata:
+•	From
+•	To
+•	Reply-To
+•	Subject
+•	Date
+•	Sender IP
+•	Delivery information
+Email Body
+Contains the message:
+•	Plain text
+•	HTML
+________________________________________
+6. Message Source Analysis
+Viewing message source reveals:
+•	Full headers
+•	Raw email body
+•	Sender IP
+•	Technical information
+Shortcut:
+Ctrl + U
+Useful for phishing investigations.
+________________________________________
+7. HTML Emails
+HTML emails may contain:
+•	Images
+•	Links
+•	Formatting
+•	Embedded content
+Analyzing HTML source helps detect:
+•	Hidden links
+•	Suspicious elements
+•	Malicious content
+________________________________________
+8. Email Attachments
+Important attachment headers:
+Content-Type
+•	Defines file type.
+•	Example: application/pdf
+Content-Disposition
+•	Shows attachment name and file type.
+Content-Transfer-Encoding
+•	Shows encoding method.
+•	Commonly Base64.
+Base64 data can be decoded to recover the original file.
+Tools:
+•	CyberChef
+•	Base64 decoder
+________________________________________
+9. Malicious Email Types
+Spam
+•	Unwanted bulk emails sent to many recipients.
+•	Malicious spam is called malspam.
+Phishing
+•	Emails impersonating trusted entities.
+•	Goal: steal sensitive information.
+Spear Phishing
+•	Targeted phishing against a specific person or organization.
+•	Uses personal information.
+Whaling
+•	Spear phishing targeting high-level executives:
+o	CEO
+o	CFO
+o	Managers
+Goal:
+•	Steal sensitive data.
+•	Gain financial access.
+Smishing
+•	Phishing through SMS/text messages.
+•	Targets mobile users.
+Vishing
+•	Phishing through voice calls.
+•	Uses social engineering over the phone.
+________________________________________
+10. Phishing Email Indicators
+Common signs:
+Spoofed From Address
+•	Fake sender pretending to be trusted.
+Example:
+noreply@microsof.com
+Urgency
+Creates pressure:
+"Your account will be locked in 24 hours"
+Brand Impersonation
+Copies:
+•	Logos
+•	Colors
+•	Company design
+Grammar Issues
+•	Strange wording.
+•	Spelling mistakes.
+Generic Content
+Example:
+"Dear Customer"
+instead of using a real name.
+Hidden or Shortened Links
+•	Disguise the real destination.
+•	Example:
+o	bit.ly links
+Malicious Attachments
+Examples:
+•	Fake invoices
+•	Malware files
+Example:
+invoice.pdf.exe
+________________________________________
+11. Safe Email Analysis
+Never click suspicious:
+•	Links
+•	Attachments
+•	IP addresses
+Use defanging.
+Example:
+Original:
+http://www.suspiciousdomain.com
+Defanged:
+hxxp[://]www[.]suspiciousdomain[.]com
+Common changes:
+. → [.]
+:// → [://]
+Purpose:
+•	Prevent accidental clicks.
+•	Safely share indicators.
+________________________________________
+12. Phishing Example: Fake PayPal Receipt
+Attackers often impersonate trusted companies to trick users.
+Example:
+•	Fake PayPal transaction receipt.
+________________________________________
+Techniques Used
+Spoofed Email Address
+•	Fake sender address appears trusted.
+•	Used to gain credibility.
+Example:
+Displayed:
+service@paypal.com
+Actual:
+gibberish@sultanbogor.com
+The real sender does not belong to PayPal.
+________________________________________
+URL Shortening
+Attackers use URL shorteners to:
+•	Hide the final destination.
+•	Make malicious links harder to detect.
+Security rule:
+Never click links before checking where they lead.
+________________________________________
+Branded HTML
+Attackers copy:
+•	Logos
+•	Colors
+•	Company layouts
+Goal:
+•	Make fake emails look authentic.
+________________________________________
+Email Investigation
+Subject Analysis
+Phishing subjects often:
+•	Create urgency.
+•	Trigger emotional reactions.
+Example:
+"Your payment was successful"
+or
+"Your account will be closed"
+________________________________________
+Header Analysis
+Check:
+•	From address
+•	To address
+•	Subject
+•	Sender domain
+Red flags:
+•	Sender does not match claimed company.
+•	Strange recipient address.
+•	Suspicious domains.
+________________________________________
+Body Analysis
+Fake PayPal email example:
+•	Looks like a purchase receipt.
+•	Contains gift card transaction details.
+•	No attachments.
+•	Contains a suspicious button:
+"Cancel the order"
+________________________________________
+Button Investigation
+Inspecting raw HTML reveals:
+•	Hidden links.
+•	Redirect URLs.
+•	Actual destination.
+Attackers hide malicious pages behind shortened URLs.
+________________________________________
+Safe URL Checking
+Tools:
+WhereGoes
+Can:
+•	Analyze shortened URLs.
+•	Show redirect chain.
+•	Reveal final destination.
+________________________________________
+13. Phishing Example: Fake Shipping Notification
+This phishing email imitates a shipping notification to create urgency and trick users into clicking a malicious link.
+Attackers use fake delivery messages because people are more likely to react quickly when they think they have an important package.
+________________________________________
+Phishing Techniques Used
+Spoofed Email Address
+•	The attacker pretends to be a trusted delivery service.
+•	Goal:
+o	Gain credibility.
+o	Make the victim trust the email.
+Example:
+Displayed name:
+Distribution Center
+Actual email:
+contact@beginpro.club
+Red flag:
+•	Display name does not match the real sender address.
+________________________________________
+Pixel Tracking
+Attackers embed invisible images inside emails.
+Purpose:
+•	Detect when the email is opened.
+•	Send information back to the attacker's server.
+Tracking pixels are often:
+•	Very small images.
+•	Hidden inside the email HTML.
+Because of this, many email providers block images automatically.
+________________________________________
+Link Manipulation
+Attackers hide malicious destinations behind:
+•	Fake tracking numbers.
+•	Disguised hyperlinks.
+•	Fake delivery buttons.
+Goal:
+•	Make users click a malicious website.
+________________________________________
+First Observations
+Subject Line
+The subject creates urgency:
+Example:
+•	Fake tracking number.
+•	Package delivery notification.
+Goal:
+•	Encourage the user to check the link quickly.
+________________________________________
+From Address
+Immediate warning sign:
+Displayed:
+Distribution Center
+Actual:
+contact@beginpro.club
+The sender does not match a legitimate shipping company.
+________________________________________
+Hyperlink
+The email contains a tracking link.
+Problem:
+•	The link looks related to shipping.
+•	The real destination is unknown.
+Always inspect links before clicking.
+________________________________________
+Image Blocking
+Email providers like Yahoo may block images automatically.
+Reason:
+Images can contain tracking pixels.
+When loaded, they can tell attackers:
+•	When the email was opened.
+•	Information about the recipient.
+________________________________________
+Raw Source Analysis
+Checking the email source reveals:
+•	Image source URLs.
+•	Hidden tracking pixels.
+•	Redirect links.
+•	Actual hyperlink destinations.
+The raw HTML can expose malicious elements hidden in the normal email view.
+14. Phishing Example: Multi-Stage Redirection & Credential Harvesting Campaign
+This phishing campaign uses a multi-stage redirection chain to steal user credentials.
+Attackers use trusted services and brands such as:
+•	Microsoft 
+•	OneDrive 
+•	Adobe 
+Goal:
+•	Create trust. 
+•	Hide the final malicious destination. 
+•	Trick users into entering login credentials. 
+________________________________________
+Phishing Techniques Used
+Artificial Urgency
+Attackers create pressure by introducing a limited time window.
+Example:
+•	Document download link expires the same day. 
+Purpose:
+•	Force the victim to act quickly. 
+•	Prevent careful analysis of the email. 
+________________________________________
+Brand Impersonation
+Attackers imitate trusted companies.
+Examples:
+•	Microsoft 
+•	OneDrive 
+•	Adobe 
+Purpose:
+•	Create a false sense of security. 
+•	Make the phishing page appear legitimate. 
+________________________________________
+Link Redirection
+Attackers use multiple URLs in a chain.
+Example flow:
+Email link
+↓
+Fake OneDrive page
+↓
+Fake Adobe page
+↓
+Fake login portal
+Purpose:
+•	Hide the real malicious destination. 
+•	Avoid detection by email security filters. 
+________________________________________
+Credential Harvesting
+Attackers create fake login pages.
+Goal:
+•	Capture usernames. 
+•	Capture passwords. 
+•	Send stolen credentials to attacker-controlled servers. 
+________________________________________
+First Observations
+Send Date
+The email was sent on:
+Thursday, July 15th, 2021
+________________________________________
+Expiration Date
+The email creates urgency by claiming:
+•	The document download link expires soon. 
+Purpose:
+•	Encourage immediate action. 
+•	Reduce the chance that the victim investigates the email. 
+________________________________________
+Download Document Here Button
+The email contains an action button:
+Download Document Here
+This button starts the phishing chain.
+________________________________________
+Redirection Chain Analysis
+After clicking the download button:
+Stage 1 - Fake OneDrive Page
+The victim is redirected to a page pretending to be a legitimate OneDrive document share.
+Attackers use:
+•	Microsoft branding. 
+•	Familiar document-sharing layouts. 
+Goal:
+•	Make the victim believe the document is safe. 
+________________________________________
+Stage 2 - Fake Adobe Page
+Interacting with the fake OneDrive page redirects the victim again.
+The next page impersonates Adobe.
+Warning signs:
+•	Suspicious URL. 
+•	Strange instructions. 
+•	Incorrect page behavior. 
+________________________________________
+Stage 3 - Credential Harvesting Portal
+The final page asks the victim to sign in using their email provider.
+Example:
+•	Outlook login page. 
+Purpose:
+•	Steal authentication credentials. 
+________________________________________
+Fake Login Page Analysis
+The victim attempts to log in using Outlook.
+Important:
+Even if valid credentials are entered:
+•	Login does not actually happen. 
+•	The credentials are sent directly to the attacker. 
+•	The page displays a fake error message. 
+Example:
+"Invalid Credentials"
+________________________________________
+Why Attackers Use Fake Login Pages
+A fake login page allows attackers to:
+•	Collect usernames. 
+•	Collect passwords. 
+•	Access corporate accounts. 
+•	Perform further attacks. 
+Possible next steps:
+•	Account takeover. 
+•	Internal reconnaissance. 
+•	Privilege escalation. 
+•	Data theft. 
+________________________________________
+AI and Modern Phishing
+Older phishing emails often contained:
+•	Grammar mistakes. 
+•	Spelling errors. 
+•	Poor formatting. 
+Today:
+Attackers use AI to create:
+•	Professional-looking emails. 
+•	Correct grammar. 
+•	Realistic branding. 
+•	Convincing messages. 
+Important:
+Grammar mistakes are no longer a reliable indicator of phishing.
+Always analyze:
+•	Sender address. 
+•	Links. 
+•	Redirects. 
+•	Email headers. 
+•	Website authenticity. 
+________________________________________
+Investigation Checklist
+When analyzing similar phishing emails check:
+Email Header
+Look for:
+•	Fake sender addresses. 
+•	Suspicious domains. 
+•	Mismatched display names. 
+________________________________________
+Links
+Check:
+•	Final destination. 
+•	Redirect chains. 
+•	Suspicious domains. 
+Never trust:
+•	Buttons. 
+•	Shortened URLs. 
+•	Embedded links. 
+________________________________________
+Login Pages
+Verify:
+•	Correct domain. 
+•	HTTPS certificate. 
+•	Official company URL. 
+Never enter credentials into:
+•	Unknown pages. 
+•	Suspicious redirects. 
+•	Fake document portals. 
+15. Phishing Example: Fake Netflix Billing Notification
+This phishing email impersonates a trusted streaming service (Netflix) and uses a fake billing notification to pressure the victim into taking action.
+Unlike previous phishing examples that mainly used malicious links inside emails, this attack uses a malicious attachment to hide the real phishing destination.
+Attackers use fake billing problems because users are more likely to react quickly when they believe their account has been suspended.
+________________________________________
+Phishing Techniques Used
+Spoofed Email Address
+Attackers manipulate the sender information to appear legitimate.
+Example:
+Displayed name:
+Netflix billing
+Red flags:
+•	Display name does not match the real sender address. 
+•	Sender domain is not associated with Netflix. 
+Purpose:
+•	Gain victim trust. 
+•	Make the email appear official. 
+________________________________________
+Sense of Urgency
+The email claims that:
+•	The user's account has been suspended. 
+•	Immediate action is required. 
+Purpose:
+•	Create panic. 
+•	Force the victim to act without investigating. 
+Example:
+"Your account has been suspended. Update your payment information immediately."
+________________________________________
+Brand Impersonation
+Attackers copy legitimate company designs.
+They use:
+•	Netflix logos. 
+•	HTML email templates. 
+•	Company colors. 
+•	Similar formatting. 
+Goal:
+•	Make the phishing email look authentic. 
+•	Trick users into believing it is a real Netflix message. 
+________________________________________
+Poor Grammar and Typos
+The email contains:
+•	Spelling mistakes. 
+•	Incorrect wording. 
+•	Unnatural phrases. 
+Example:
+Incorrect variations of:
+Netflix
+can be used as a warning sign.
+Important:
+Grammar mistakes alone are no longer enough to detect phishing because AI can generate professional-looking emails.
+________________________________________
+Malicious Attachments
+Instead of placing a direct malicious link inside the email, attackers attach a file.
+Example:
+PDF attachment.
+Purpose:
+•	Bypass some email filters. 
+•	Hide the malicious URL. 
+•	Make the attack appear more legitimate. 
+________________________________________
+First Observations
+Email Subject
+The subject creates urgency.
+Example:
+•	Receiver's ID was suspended. 
+•	Immediate action required. 
+Goal:
+•	Encourage quick reaction. 
+•	Make the victim open the attachment. 
+________________________________________
+From Address
+Warning signs:
+•	Display name claims to be Netflix. 
+•	Actual sender does not belong to Netflix. 
+•	Domain mismatch. 
+Always compare:
+Display name
+with
+Actual email address.
+________________________________________
+Brand Impersonation
+The email uses:
+•	Rendered HTML. 
+•	Netflix branding. 
+•	Similar visual design. 
+Purpose:
+•	Create trust. 
+•	Make the victim believe the email is official. 
+________________________________________
+Email Body Analysis
+The email claims:
+•	There is a problem with billing information. 
+•	The user must update payment details. 
+•	The attached PDF contains instructions. 
+The victim is instructed to:
+1.	Open the PDF attachment. 
+2.	Click the payment update link. 
+3.	Enter information. 
+________________________________________
+Attachment Analysis
+The attached PDF contains:
+A button/link:
+Update Payment Account
+The link redirects to:
+•	A URL not associated with Netflix. 
+•	A potentially malicious website. 
+Important:
+A PDF attachment does not automatically mean the file is safe.
+Documents can contain:
+•	Embedded links. 
+•	Malicious content. 
+•	Redirects. 
+________________________________________
+Additional Red Flags
+Suspicious Phone Number Format
+The email contains:
+•	An unusual phone number format. 
+This may indicate:
+•	Fake contact information. 
+•	Attempt to appear legitimate. 
+________________________________________
+Fake Trust Building
+Attackers may include:
+A legitimate Netflix Help Center domain.
+Purpose:
+•	Make the email look more believable. 
+•	Distract from malicious elements. 
+Important:
+Attackers often combine real information with fake content to increase credibility.
+________________________________________
+Investigation Process
+When analyzing similar phishing emails:
+Check Sender
+Look for:
+•	Domain mismatch. 
+•	Fake display names. 
+•	Suspicious addresses. 
+________________________________________
+Analyze Attachments
+Check:
+•	File type. 
+•	Embedded links. 
+•	Redirect destinations. 
+Do not open attachments unless they are verified.
+________________________________________
+Inspect HTML Source
+Look for:
+•	Hidden URLs. 
+•	External resources. 
+•	Suspicious code. 
+16. Phishing Example: Fake Apple Support Billing Notification
+This phishing email impersonates Apple Support and attempts to trick the victim into opening a malicious attachment.
+Unlike previous phishing examples that used email body content or visible links to convince the user, this attack uses:
+•	A completely blank email body. 
+•	A suspicious attachment. 
+•	A fake billing notification. 
+The attacker relies on urgency and curiosity about an unauthorized purchase to make the victim interact with the file.
+________________________________________
+Phishing Techniques Used
+Spoofed Email Address
+Attackers manipulate the sender information to appear as:
+Apple Support
+Red flags:
+•	Display name does not match the actual sender. 
+•	Sender domain is not associated with Apple. 
+•	Typos appear in the sender address. 
+Purpose:
+•	Create trust. 
+•	Make the email appear to come from a legitimate company. 
+________________________________________
+BCC Recipient Hiding
+The victim receives the email through:
+Blind Carbon Copy (BCC)
+Meaning:
+•	The recipient is hidden from other recipients. 
+•	The email was not directly addressed to the victim. 
+Why attackers use BCC:
+•	Hide the real recipient list. 
+•	Send the same phishing email to many targets. 
+•	Make the email appear more legitimate. 
+Red flag:
+A billing notification normally should be addressed directly to the account owner.
+________________________________________
+Sense of Urgency
+The email claims:
+•	There was an unauthorized purchase. 
+•	Immediate action is required. 
+Example:
+"Action Required"
+Purpose:
+•	Create panic. 
+•	Encourage the victim to open the attachment quickly. 
+•	Prevent careful investigation. 
+________________________________________
+Poor Grammar and Typos
+The email contains:
+•	Spelling mistakes. 
+•	Incorrect formatting. 
+•	Errors in email addresses. 
+These mistakes can indicate:
+•	Fake sender. 
+•	Automated phishing campaign. 
+Important:
+Modern attackers may use AI to remove obvious grammar mistakes, so other indicators should also be checked.
+________________________________________
+Malicious Attachment
+The email contains:
+A .dot file.
+.dot file:
+•	Microsoft Word Template file. 
+•	Can contain embedded content. 
+•	Unusual format for a billing receipt. 
+Why attackers use attachments:
+•	Avoid simple link detection. 
+•	Hide malicious redirects. 
+•	Encourage the victim to open a document. 
+________________________________________
+First Observations
+Email Subject
+The subject creates urgency.
+Example:
+•	Unauthorized purchase notification. 
+•	Action required. 
+Goal:
+•	Make the victim believe their account is compromised. 
+•	Encourage immediate action. 
+________________________________________
+From Address
+Warning signs:
+•	Display name: 
+Apple Support
+does not match:
+•	Actual sender address. 
+•	Sender domain. 
+Additional problems:
+•	Typos in the From address. 
+•	Typos in the To address. 
+Always verify:
+•	Sender name. 
+•	Sender domain. 
+•	Email address spelling. 
+________________________________________
+Blind Carbon Copy (BCC)
+The recipient was:
+•	Not directly emailed. 
+•	Added through BCC. 
+This is suspicious because:
+•	Legitimate account notifications normally identify the customer. 
+•	Attackers often hide mass phishing campaigns using BCC. 
+________________________________________
+Attachment Analysis
+The email body is:
+Completely blank
+This is suspicious because:
+•	There is no explanation. 
+•	The only action available is opening the attachment. 
+The attachment:
+.dot Microsoft Word Template file
+contains:
+•	An embedded image. 
+•	A hidden redirect link. 
+________________________________________
+Embedded Link Investigation
+When the victim clicks the large image inside the document:
+They are redirected to:
+•	A phishing website. 
+The URL contains familiar words such as:
+•	apps 
+•	ios 
+Attackers use these terms to appear legitimate.
+________________________________________
+Malicious URL Indicators
+Warning signs:
+Excessive URL Length
+A very long URL may indicate:
+•	Redirect chains. 
+•	Hidden tracking. 
+•	Obfuscated destinations. 
+________________________________________
+Fake Legitimate Terms
+Attackers include words related to trusted brands.
+Examples:
+•	Apple. 
+•	iOS. 
+•	Apps. 
+Purpose:
+•	Make the URL look trustworthy. 
+________________________________________
+Investigation Process
+When analyzing suspicious attachments:
+Check File Type
+Ask:
+•	Is this file type expected? 
+•	Does it match the email purpose? 
+Example:
+A .dot template file is unusual for a purchase receipt.
+________________________________________
+Analyze Embedded Content
+Look for:
+•	Images containing links. 
+•	Hidden redirects. 
+•	External resources. 
+________________________________________
+Verify Destination URLs
+Check:
+•	Domain ownership. 
+•	URL structure. 
+•	Redirect behavior. 
+Never trust URLs only because they contain familiar words.
+17. Phishing Example: Fake DHL Shipping Notification
+This phishing email impersonates a DHL Express shipping notification to trick the victim into opening a malicious Excel attachment.
+Unlike previous examples where attackers mainly used fake login pages or document links, this attack uses:
+•	Spoofed shipping notifications. 
+•	Branded HTML emails. 
+•	A malicious Excel file. 
+•	An embedded link that attempts to execute malware. 
+The attacker uses the reputation of DHL to create trust and convince the victim to open the attachment.
+________________________________________
+Phishing Techniques Used
+Spoofed Email Address
+Attackers modify the sender information to appear as:
+DHL Express
+Red flags:
+•	Display name does not match the real sender. 
+•	Sender domain is not associated with DHL. 
+Purpose:
+•	Make the email appear official. 
+•	Increase the chance that the victim opens the attachment. 
+________________________________________
+Brand Impersonation
+Attackers recreate DHL branding using:
+•	HTML email templates. 
+•	Logos. 
+•	Company colors. 
+•	Similar formatting. 
+Goal:
+•	Create a realistic-looking notification. 
+•	Make the phishing email appear legitimate. 
+________________________________________
+Malicious Attachments
+The email contains:
+.xlsx Excel document
+Purpose:
+•	Deliver malicious content. 
+•	Hide the attack inside a seemingly normal business document. 
+The attachment contains:
+•	A clickable link. 
+•	A hidden next stage of the attack. 
+________________________________________
+First Observations
+Email Subject
+The subject creates the impression that:
+•	DHL is delivering a package. 
+•	The recipient needs to check shipping information. 
+Goal:
+•	Encourage the victim to open the attachment. 
+________________________________________
+From Address
+Warning signs:
+Displayed name:
+DHL Express
+Problems:
+•	Sender domain does not belong to DHL. 
+•	Display name is only an imitation. 
+Always verify:
+•	Sender domain. 
+•	Email address. 
+•	Company ownership. 
+________________________________________
+Brand Impersonation
+The email body uses:
+•	DHL-style HTML. 
+•	Logos. 
+•	Company formatting. 
+Purpose:
+•	Build trust. 
+•	Hide the malicious intent. 
+________________________________________
+Email Body and Attachment Analysis
+The email body contains limited information.
+The main part of the attack is inside the attached:
+.xlsx file
+________________________________________
+Geographic Inconsistencies
+The document contains multiple suspicious indicators:
+Sender Location
+•	Uses a German domain. 
+Invoice Location
+•	Addressed to a city in India. 
+Document Language
+•	Contains Mandarin text. 
+These conflicting details are a warning sign.
+Legitimate business documents usually have:
+•	Consistent locations. 
+•	Consistent language. 
+•	Matching company information. 
+________________________________________
+Excel Attachment Analysis
+The Excel file contains:
+•	A single clickable hyperlink. 
+The link is designed to:
+•	Continue the attack. 
+•	Download malicious content. 
+•	Execute code on the victim's system. 
+________________________________________
+Executable Payload
+When the hyperlink inside the Excel document is clicked:
+It attempts to download and execute:
+regasms.exe
+The system produces an error, preventing execution in the testing environment.
+However, the attempt shows the attacker's intention:
+•	Execute code on the victim machine. 
+•	Gain further access. 
+________________________________________
+Possible Impact If Successfully Executed
+Establish Persistence
+The attacker could:
+•	Create a backdoor. 
+•	Add scheduled tasks. 
+•	Maintain access after reboot. 
+Goal:
+•	Keep control of the infected machine. 
+________________________________________
+Data Exfiltration
+The attacker could steal:
+•	Sensitive documents. 
+•	Credentials. 
+•	Browser-stored passwords. 
+•	Personal information. 
+Goal:
+•	Sell data. 
+•	Perform additional attacks. 
+________________________________________
+Deploy Ransomware
+The attacker could:
+•	Encrypt files. 
+•	Disrupt business operations. 
+•	Demand payment for recovery. 
+________________________________________
+Investigation Process
+When analyzing suspicious shipping emails:
+Check Sender
+Look for:
+•	Fake display names. 
+•	Incorrect domains. 
+•	Mismatched company information. 
+________________________________________
+Analyze Attachments
+Check:
+•	File type. 
+•	Embedded links. 
+•	Suspicious behavior. 
+Examples:
+•	Excel files containing external links. 
+•	Documents requesting actions. 
+•	Unexpected attachments. 
+________________________________________
+Inspect URLs
+Look for:
+•	Unknown domains. 
+•	Redirects. 
+•	Executable downloads. 
+Never open suspicious links from documents.
+18. Email Analysis Artifacts
+When analyzing a suspicious or malicious email, the first objective is to collect artifacts that help determine whether the email is legitimate or part of a phishing attack.
+Artifacts are pieces of information extracted from the email that can later be used for:
+•	Threat intelligence lookups. 
+•	Reputation checks. 
+•	IOC (Indicators of Compromise) identification. 
+•	Malware analysis. 
+•	Incident response. 
+Collecting these artifacts is the foundation of every phishing investigation.
+________________________________________
+Header Artifacts
+The email header contains valuable technical information about the message.
+When analyzing the header, pay attention to the following artifacts.
+________________________________________
+Sender Email Address
+Question:
+Where did the email originate?
+Check:
+•	Sender username. 
+•	Sender domain. 
+•	Whether the sender matches the organization it claims to represent. 
+Red flags:
+•	Misspelled domains. 
+•	Free email providers pretending to be companies. 
+•	Domain spoofing. 
+________________________________________
+Sender IP Address
+Question:
+What is the source IP address?
+The sender IP can be used to:
+•	Perform reverse IP lookups. 
+•	Identify the sending mail server. 
+•	Check reputation databases. 
+•	Determine the geographical origin of the email. 
+A suspicious IP may indicate:
+•	Spam infrastructure. 
+•	Compromised servers. 
+•	Known malicious hosts. 
+________________________________________
+Email Subject
+Question:
+Does the subject create urgency or encourage immediate action?
+Common phishing subjects include:
+•	Account suspended. 
+•	Payment failed. 
+•	Action required. 
+•	Security alert. 
+•	Invoice attached. 
+Purpose:
+•	Pressure the victim into acting quickly. 
+________________________________________
+Recipient Address
+Check:
+•	To 
+•	CC 
+•	BCC 
+Questions:
+•	Was the email sent directly? 
+•	Was it mass distributed? 
+•	Is the recipient expected? 
+The use of BCC may indicate:
+•	Bulk phishing campaigns. 
+•	Hidden recipient lists. 
+________________________________________
+Reply-To Address
+Question:
+Where will replies actually be sent?
+Sometimes attackers use:
+•	Legitimate-looking From addresses. 
+but configure:
+•	A different Reply-To address. 
+Purpose:
+•	Redirect communication to the attacker. 
+Always compare:
+•	From 
+•	Reply-To 
+________________________________________
+Date and Time
+Check:
+•	Date sent. 
+•	Time sent. 
+•	Time zone. 
+Questions:
+•	Does the timestamp make sense? 
+•	Was the email sent outside normal business hours? 
+•	Does it match the claimed organization? 
+________________________________________
+Email Body Artifacts
+The email body also contains valuable indicators that should be analyzed.
+________________________________________
+URLs and Hyperlinks
+Identify:
+•	Every embedded link. 
+•	Hidden hyperlinks. 
+•	Buttons. 
+•	Redirects. 
+Always:
+•	Expand shortened URLs. 
+•	Verify the destination domain. 
+•	Inspect redirect chains. 
+Never trust displayed text alone.
+________________________________________
+Attachment Names
+Check:
+•	File names. 
+•	File extensions. 
+•	Whether the attachment matches the email context. 
+Examples of suspicious attachments:
+•	invoice.pdf.exe 
+•	payment.dot 
+•	shipment.xlsx 
+•	update.docm 
+Unexpected attachment types should always be investigated.
+________________________________________
+Attachment Hash
+Generate a cryptographic hash of suspicious files.
+Common hashing algorithms:
+•	MD5 
+•	SHA-1 
+•	SHA-256 
+Purpose:
+•	Search threat intelligence databases. 
+•	Identify known malware. 
+•	Compare files with previous incidents. 
+Hashes allow analysts to uniquely identify files without opening or executing them.
+________________________________________
+Investigation Workflow
+A basic phishing investigation should include:
+1.	Analyze the email header. 
+2.	Verify the sender address. 
+3.	Check the sender IP reputation. 
+4.	Inspect the subject line. 
+5.	Review recipient information. 
+6.	Compare the Reply-To address. 
+7.	Analyze hyperlinks. 
+8.	Inspect attachments. 
+9.	Generate file hashes. 
+10.	Search threat intelligence databases for indicators.
+19. Phishing Analysis Tools
+After collecting email artifacts, the next step is to analyze them using specialized tools.
+Some information can be viewed directly in an email client (Gmail, Yahoo, Outlook), while other details—such as the sender's IP address, routing path, and Reply-To information—must be extracted from the email header.
+Instead of manually inspecting raw headers, analysts often use automated tools to speed up the investigation.
+________________________________________
+Email Header Analysis Tools
+Email header analysis tools automatically extract important information from raw email headers.
+These tools help identify:
+•	Sender IP address. 
+•	Email routing path. 
+•	Reply-To address. 
+•	Mail server information. 
+•	Header anomalies. 
+•	Misconfigurations. 
+________________________________________
+Google Messageheader
+Google's Messageheader (Google Admin Toolbox) analyzes email headers.
+How it works:
+1.	Copy the full email header. 
+2.	Paste it into the tool. 
+3.	Review the analysis. 
+The tool can identify:
+•	Sender IP address. 
+•	Mail servers involved. 
+•	Delivery path. 
+•	Header inconsistencies. 
+•	Possible spoofing indicators. 
+Purpose:
+•	Simplify email header analysis. 
+•	Reduce manual investigation time. 
+________________________________________
+Message Header Analyzer
+Another popular email header analysis tool is:
+Message Header Analyzer
+It performs similar functions to Google's Messageheader.
+It helps identify:
+•	Sender information. 
+•	Email routing. 
+•	Header structure. 
+•	Potential anomalies. 
+Useful for:
+•	Phishing investigations. 
+•	Incident response. 
+•	Email forensics. 
+________________________________________
+IP Reputation Analysis
+Once the sender IP address has been identified, analysts should verify its reputation.
+Questions to ask:
+•	Where does the IP originate? 
+•	Who owns the IP? 
+•	Has it been associated with malicious activity? 
+Reputation analysis helps determine whether an IP address belongs to:
+•	A legitimate organization. 
+•	A cloud provider. 
+•	A known phishing infrastructure. 
+•	A spam or malware campaign. 
+________________________________________
+IPinfo
+IPinfo provides detailed information about an IP address.
+Information includes:
+•	Geographic location. 
+•	Organization. 
+•	ISP (Internet Service Provider). 
+•	ASN (Autonomous System Number). 
+Purpose:
+•	Identify where an email originated. 
+•	Determine whether the IP is expected or suspicious. 
+________________________________________
+URL Reputation Analysis
+Phishing emails frequently contain malicious URLs.
+Rather than visiting them directly, analysts should use reputation services.
+These tools safely analyze websites without exposing the analyst to malware.
+________________________________________
+URLScan.io
+URLScan.io safely investigates websites.
+The service:
+•	Opens the webpage inside a controlled environment. 
+•	Records network activity. 
+•	Captures screenshots. 
+•	Identifies redirects. 
+•	Detects suspicious behavior. 
+Purpose:
+•	Analyze websites without visiting them directly. 
+•	Identify phishing pages. 
+•	Observe website behavior safely. 
+________________________________________
+Cisco Talos IP & Domain Reputation Center
+Cisco Talos IP & Domain Reputation Center is a threat intelligence platform.
+It analyzes:
+•	IP addresses. 
+•	Domains. 
+•	Networks. 
+The tool provides:
+•	Reputation scores. 
+•	Threat classifications. 
+•	Known malicious activity. 
+•	Intelligence about infrastructure. 
+Purpose:
+•	Determine whether an IP or domain has been involved in phishing, spam, or malware campaigns. 
+________________________________________
+Investigation Workflow
+When analyzing phishing infrastructure:
+1.	Extract the email header. 
+2.	Analyze the header using Messageheader or Message Header Analyzer. 
+3.	Identify the sender IP. 
+4.	Check the IP reputation using IPinfo. 
+5.	Collect URLs from the email. 
+6.	Analyze URLs using URLScan.io. 
+7.	Verify IPs and domains using Cisco Talos. 
+8.	Document all findings. 
+________________________________________
+Common Investigation Tools
+Tool	Purpose
+Google Messageheader	Analyze email headers
+Message Header Analyzer	Inspect email routing and metadata
+IPinfo	Gather IP address information
+URLScan.io	Safely analyze websites and URLs
+Cisco Talos	Check IP and domain reputation
+
+20.Email Body Analysis & Attachment Analysis
+After analyzing the email header, the next step is to focus on the email body. This is often where the true intention of a phishing email is revealed.
+The email body is usually where attackers deliver their malicious payload through:
+•	Malicious hyperlinks 
+•	Fake login pages 
+•	Dangerous attachments 
+•	Embedded scripts or content 
+During analysis, links should be extracted from:
+•	Visible email content 
+•	HTML source code 
+•	Raw email message source 
+This helps identify hidden or obfuscated URLs.
+________________________________________
+Mail Body Analysis
+Link Investigation
+A simple way to investigate a link inside an email is:
+1.	Right-click the link. 
+2.	Select: 
+Copy Link Address
+(The option name may vary depending on the email client or browser.)
+3.	Analyze the URL without opening it. 
+This allows analysts to determine:
+•	The real destination. 
+•	Whether the domain is suspicious. 
+•	Whether the link contains redirects. 
+________________________________________
+URL Extraction Tools
+Manually checking links can be difficult, especially when emails contain hidden or multiple URLs.
+URL extraction tools can automatically identify links inside email content.
+Benefits:
+•	Extract embedded URLs. 
+•	Detect hidden links. 
+•	Reveal obfuscated destinations. 
+•	Save time during investigations. 
+Examples of tools:
+CyberChef
+CyberChef can:
+•	Extract URLs. 
+•	Decode encoded content. 
+•	Analyze suspicious email data. 
+URL Extraction Tools
+These tools allow analysts to:
+•	Paste raw email content. 
+•	Automatically parse all URLs. 
+•	Identify suspicious destinations. 
+________________________________________
+Email Attachments
+Attachments are one of the most common methods attackers use to deliver malware.
+Examples:
+•	PDF files 
+•	Microsoft Office documents 
+•	Executable files 
+•	Archive files 
+A suspicious attachment should never be opened directly.
+________________________________________
+Safe Attachment Handling
+Attachments should only be downloaded and analyzed in a controlled environment:
+Examples:
+•	Virtual machine (VM) 
+•	Sandbox 
+•	Malware analysis lab 
+Purpose:
+•	Prevent accidental execution. 
+•	Protect the analyst's system. 
+________________________________________
+SHA256 Hash Analysis
+After safely obtaining an attachment, analysts should generate a hash value.
+A hash provides a unique identifier for the file and can be used for threat intelligence searches.
+Example command:
+sha256sum shady_attachment.pdf
+Example output:
+025ba9ce4a2118a9ca7b115c8869ff73bc16bad3732ba359cef1e60ad8f961f9 shady_attachment.pdf
+The SHA256 hash can be searched in security databases to determine whether the file is known to be malicious.
+________________________________________
+Cisco Talos Reputation Analysis
+Cisco Talos IP & Domain Reputation Center can be used to analyze file hashes.
+The service can identify whether a file has been associated with:
+•	Phishing 
+•	Malware 
+•	Spam 
+A malicious classification indicates that the attachment is likely dangerous.
+________________________________________
+VirusTotal Analysis
+VirusTotal is a widely used threat intelligence platform.
+It allows analysts to check the reputation of:
+•	Files 
+•	URLs 
+•	IP addresses 
+•	Domains 
+•	Hash values 
+VirusTotal uses results from many security vendors to determine whether an indicator has been detected as malicious.
+________________________________________
+VirusTotal Features
+VirusTotal allows analysts to:
+•	Upload suspicious files. 
+•	Submit URLs for analysis. 
+•	Search file hashes. 
+•	Review antivirus detection results. 
+•	Investigate suspicious indicators. 
+It is one of the most commonly used tools during phishing investigations.
+
+21.Malware Sandbox Analysis
+Defenders do not always need advanced malware reverse engineering skills to understand malicious attachments.
+Instead, they can use malware sandboxes.
+A malware sandbox is a controlled environment where suspicious files can be safely executed and analyzed without risking the analyst’s own system.
+________________________________________
+Purpose of Malware Sandboxes
+Malware sandboxes allow analysts to observe:
+•	File behavior 
+•	Network connections 
+•	Downloaded payloads 
+•	System changes 
+•	Processes created 
+•	Indicators of Compromise (IOCs) 
+By uploading a suspicious attachment from a phishing email, analysts can determine:
+•	Which URLs the file contacts. 
+•	Whether additional malware is downloaded. 
+•	What changes are made to the system. 
+•	How the malware behaves. 
+________________________________________
+ANY.RUN
+Overview
+ANY.RUN is an interactive malware sandbox that allows analysts to investigate suspicious files and URLs in real time.
+Unlike traditional automated sandboxes, ANY.RUN provides an interactive environment where analysts can directly observe and interact with the analysis process.
+________________________________________
+Features
+ANY.RUN allows analysts to:
+•	Execute suspicious files safely. 
+•	Analyze malicious URLs. 
+•	Monitor running processes. 
+•	View network activity. 
+•	Observe system changes. 
+•	Collect Indicators of Compromise (IOCs). 
+________________________________________
+Why Use ANY.RUN?
+It helps defenders understand:
+•	How malware operates. 
+•	What external servers it contacts. 
+•	What actions it performs on the system. 
+________________________________________
+Hybrid Analysis
+Overview
+Hybrid Analysis is a free malware analysis sandbox used to examine suspicious files in a controlled environment.
+It provides detailed information about malicious behavior.
+________________________________________
+Features
+Hybrid Analysis can detect:
+•	System modifications. 
+•	Network connections. 
+•	File behavior. 
+•	Indicators of Compromise. 
+•	Malware characteristics. 
+________________________________________
+Purpose
+Analysts use Hybrid Analysis to understand:
+•	What a suspicious attachment does. 
+•	Whether a file is malicious. 
+•	What threat indicators should be blocked. 
+________________________________________
+JOESandbox
+Overview
+JOESandbox, created by Joe Security, is an advanced malware analysis platform.
+It performs both:
+•	Static analysis. 
+•	Dynamic analysis. 
+________________________________________
+Static Analysis
+Examines the file without executing it.
+Can reveal:
+•	File structure. 
+•	Embedded information. 
+•	Suspicious characteristics. 
+________________________________________
+Dynamic Analysis
+Runs the file in a controlled environment.
+Observes:
+•	Processes. 
+•	Network connections. 
+•	System changes. 
+•	Malware behavior. 
+________________________________________
+JOESandbox Reports
+Generates detailed reports containing:
+•	Malware behavior. 
+•	Indicators of Compromise (IOCs). 
+•	Threat classifications. 
+•	Analysis results.
+
+22.PhishTool - Phishing Investigation Platform
+PhishTool is a platform designed to simplify and automate phishing email investigations.
+It is used by security professionals such as:
+•	SOC Analysts 
+•	Threat Intelligence Analysts 
+•	Security Researchers 
+PhishTool combines multiple investigation capabilities into one platform, including:
+•	Threat Intelligence 
+•	OSINT (Open Source Intelligence) 
+•	Email metadata analysis 
+•	Automated phishing analysis workflows 
+The goal is to quickly identify malicious emails and extract valuable Indicators of Compromise (IOCs).
+________________________________________
+Identifying Email Artifacts in PhishTool
+After uploading a suspicious email into PhishTool, analysts can view important artifacts related to the message.
+The platform provides:
+Rendered HTML View
+Shows the email as it would appear in a normal inbox.
+Useful for identifying:
+•	Fake branding 
+•	Suspicious buttons 
+•	Malicious links 
+•	Social engineering techniques 
+________________________________________
+Raw HTML View
+Displays the underlying HTML code of the email.
+Allows analysts to find:
+•	Hidden links 
+•	Embedded content 
+•	Tracking pixels 
+•	Suspicious scripts 
+________________________________________
+Message Source
+Shows the complete raw email data.
+Includes:
+•	Email headers 
+•	Sender information 
+•	Routing information 
+•	Technical metadata 
+________________________________________
+Further Email Analysis in PhishTool
+PhishTool provides multiple analysis sections accessible through tabs.
+________________________________________
+Authentication Analysis
+Checks email authentication mechanisms:
+•	SPF 
+•	DKIM 
+•	DMARC 
+Helps determine whether the sender is legitimate.
+________________________________________
+Transmission Analysis
+Shows how the email traveled between servers.
+Useful for identifying:
+•	Sending infrastructure 
+•	Suspicious mail servers 
+•	Originating IP addresses 
+________________________________________
+URL Analysis
+Analyzes links contained within the email.
+Can reveal:
+•	Suspicious domains 
+•	Malicious redirects 
+•	URL reputation 
+________________________________________
+Attachment Analysis
+If the email contains attachments, PhishTool allows analysts to inspect them directly.
+Analysts can review:
+•	File information 
+•	Suspicious indicators 
+•	Potential threats 
+________________________________________
+VirusTotal Integration
+One of PhishTool’s important features is integration with VirusTotal.
+This allows analysts to view:
+•	File reputation 
+•	URL reputation 
+•	Detection results 
+without leaving the PhishTool environment.
+Benefits:
+•	Faster investigations. 
+•	Centralized analysis. 
+•	Easier threat intelligence lookup. 
+________________________________________
+Resolving a Phishing Case
+After completing the investigation, PhishTool allows analysts to document their findings.
+The email can be classified as:
+•	Malicious 
+•	Safe 
+•	Suspicious 
+________________________________________
+Indicators of Compromise (IOCs)
+Analysts can mark important artifacts such as:
+•	Sender email addresses 
+•	Originating IP addresses 
+•	Malicious URLs 
+•	Suspicious attachments 
+________________________________________
+Investigation Notes
+Analysts can add notes describing:
+•	Why the email is malicious. 
+•	What techniques were used. 
+•	What indicators were discovered. 
+After documentation, the case can be closed using the Resolve function.
+This process is similar to real SOC workflows.
