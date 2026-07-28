@@ -1,0 +1,203 @@
+# Phishing Analysis Notes
+
+## Overview
+
+Notes about phishing email analysis, artifacts collection, and investigation techniques used by SOC analysts.
+
+Topics:
+- Email analysis
+- Phishing techniques
+- IOC extraction
+- URL analysis
+- Attachment analysis
+- Threat intelligence
+
+---
+
+# Email Basics
+
+## Email Structure
+
+Example:
+user@example.com
+
+Contains:
+
+- Username
+- Domain
+- Mail server information
+
+## Common Protocols
+
+**SMTP**
+- Used for sending emails
+
+**POP3**
+- Downloads emails locally
+
+**IMAP**
+- Synchronizes emails across devices
+
+---
+
+# Email Analysis
+
+During phishing investigations analysts check:
+
+## Headers
+
+Important fields:
+
+- From
+- To
+- Reply-To
+- Subject
+- Sender IP
+- Date
+
+## Body
+
+Look for:
+
+- Suspicious links
+- Fake branding
+- Urgency
+- Malicious content
+
+## Message Source
+
+Can reveal:
+
+- Hidden URLs
+- HTML code
+- Tracking pixels
+- Technical information
+
+---
+
+# Common Phishing Techniques
+
+## Spoofing
+
+Attackers fake sender information to appear trusted.
+
+## Urgency
+
+Examples:
+
+- Account locked
+- Payment required
+- Security alert
+
+## Brand Impersonation
+
+Attackers copy:
+
+- Logos
+- Colors
+- Email layouts
+
+## Credential Harvesting
+
+Fake login pages are used to steal:
+
+- Usernames
+- Passwords
+
+## Malicious Attachments
+
+Common files:
+
+- PDF
+- Office documents
+- Archives
+- Executables
+
+---
+
+# Investigation Workflow
+
+1. Analyze email headers
+2. Verify sender domain
+3. Check Reply-To address
+4. Extract URLs
+5. Analyze attachments
+6. Generate file hashes
+7. Search IOCs
+8. Document findings
+
+---
+
+# Useful Tools
+
+## Email Analysis
+
+- PhishTool
+- Google Messageheader
+- Message Header Analyzer
+
+## URL Analysis
+
+- URLScan.io
+- Cisco Talos
+
+## File Analysis
+
+- VirusTotal
+- ANY.RUN
+- Hybrid Analysis
+
+## Data Analysis
+
+- CyberChef
+
+---
+
+# IOC Collection
+
+Collect:
+
+- Email addresses
+- Domains
+- IP addresses
+- URLs
+- File hashes
+
+Use IOCs for:
+
+- Threat intelligence
+- Detection rules
+- Incident response
+
+---
+
+# Safe Analysis Rules
+
+Never open suspicious:
+
+- Links
+- Attachments
+- Files
+
+Use:
+
+- Virtual machines
+- Sandboxes
+- Defanged indicators
+
+Example:
+hxxp[://]example[.]com
+
+---
+
+# Summary
+
+Phishing analysis is an important SOC skill.
+
+A SOC analyst should be able to:
+
+- Identify phishing indicators
+- Analyze email artifacts
+- Investigate URLs and attachments
+- Collect IOCs
+- Document incidents
