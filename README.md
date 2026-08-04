@@ -1,33 +1,31 @@
-# Notes
+# SOC Analyst Level 1 Portfolio
 
-Cybersecurity notes organized by topic.
+Hi, this is my cybersecurity learning portfolio where I share my progress in Blue Team and SOC Analyst skills.
 
-## 📧 Phishing Analysis
+I am currently learning how to monitor security events, analyze logs, investigate alerts and understand how security incidents are handled.
 
-- [Email Basics](./Phishing-Analysis/email-basics.md)
-- [Phishing Techniques](./Phishing-Analysis/phishing-techniques.md)
-- [Email Artifacts](./Phishing-Analysis/email-artifacts.md)
-- [URL Analysis](./Phishing-Analysis/url-analysis.md)
-- [Attachment Analysis](./Phishing-Analysis/attachment-analysis.md)
+## What you can find here
 
-## 🌐 Networking
+- Blue Team Labs Online write-ups
+- SOC lab notes
+- Log analysis examples
+- Incident investigation notes
+- Tools and techniques I am learning
 
-- [TCP/IP](./Networking/tcp-ip.md)
-- [DNS](./Networking/dns.md)
-- [HTTP/HTTPS](./Networking/http-https.md)
+## Skills I am working on
 
-## 🖥️ Windows
+- SIEM basics
+- Windows Event Logs
+- Linux logs
+- Network analysis
+- Threat detection
+- Incident response
+- MITRE ATT&CK
 
-- [Event Logs](./Windows/event-logs.md)
-- [Security Events](./Windows/security-events.md)
+## Labs & Platforms
 
-## 📊 SIEM
+- Blue Team Labs Online
+- TryHackMe
+- CyberDefenders
 
-- [Splunk Basics](./SIEM/splunk-basics.md)
-- [Log Analysis](./SIEM/log-analysis.md)
-- [Alert Triage](./SIEM/alert-triage.md)
-
-## 🛡️ Incident Response
-
-- [Incident Lifecycle](./Incident-Response/incident-lifecycle.md)
-- [Investigation Process](./Incident-Response/investigation-process.md)
+This repository is a record of my learning journey and practical cybersecurity practice.
